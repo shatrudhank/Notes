@@ -1,149 +1,91 @@
-USE iwealth
+USE [IPolicy_Gamification]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sys_pull_lead_details_from_phone_banking_dialer_system]    Script Date: 20-06-2016 10:38:41 ******/
+/****** Object:  Table [dbo].[Hyd_Topup_Loan]    Script Date: 28-07-2017 10:34:05 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-/*-----------------------------------------------------------------------------------------------------------------------------------------------
-Created By : Umesh Thumar
-Created On : 02.06.2016
-Description : Used for reverse integration for closure status of the lead to be fetched from Dialler to I-Policy App through the Data base link.
--------------------------------------------------------------------------------------------------------------------------------------------------
-Source Table		: Hyd_Topup_Loan	  | SELECT * FROM Hyd_Topup_Loan  | select * from openquery(genuat1, 'select * from HYd_Topup_LOan')
-Destination Table	: tbl_mst_LeadDetails | SELECT * FROM tbl_mst_LeadDetails
-Event Audit Log		: sys_event_audit_log |	SELECT * FROM dbo.sys_event_audit_log
-Lead Status Master  : LEAD_STATUS		  | SELECT * FROM LEAD_STATUS		
-------------------------------------------------------------------------------------------------------------------------------------------------
-Possible Lead Status ( Table: LEAD_STATUS )
+SET ANSI_PADDING ON
+GO
 
-id 		description			Status
-0 		No record status	N/A
-1 		Ready				Open
-2 		Retrieved			In Progress
-3 		updated				Closed
-4 		stale				Closed
-5 		Cancelled			Closed
-6 		Agent error			Closed
-7 		chain updated		Closed
-8 		Missed call back	Closed
-9 		chain ready			Closed
+CREATE TABLE [dbo].[Hyd_Topup_Loan](
+	[RECORD_ID] [decimal](38, 0) NOT NULL,
+	[CONTACT_INFO] [varchar](128) NOT NULL,
+	[CONTACT_INFO_TYPE] [decimal](38, 0) NOT NULL,
+	[RECORD_TYPE] [decimal](38, 0) NOT NULL,
+	[RECORD_STATUS] [decimal](38, 0) NOT NULL,
+	[CALL_RESULT] [decimal](38, 0) NULL,
+	[ATTEMPT] [decimal](38, 0) NOT NULL,
+	[DIAL_SCHED_TIME] [decimal](38, 0) NULL,
+	[CALL_TIME] [decimal](38, 0) NULL,
+	[DAILY_FROM] [decimal](38, 0) NOT NULL,
+	[DAILY_TILL] [decimal](38, 0) NOT NULL,
+	[TZ_DBID] [decimal](38, 0) NOT NULL,
+	[CAMPAIGN_ID] [decimal](38, 0) NULL,
+	[AGENT_ID] [varchar](32) NULL,
+	[CHAIN_ID] [decimal](38, 0) NOT NULL,
+	[CHAIN_N] [decimal](38, 0) NOT NULL,
+	[GROUP_ID] [decimal](38, 0) NULL,
+	[APP_ID] [decimal](38, 0) NULL,
+	[TREATMENTS] [varchar](255) NULL,
+	[MEDIA_REF] [decimal](38, 0) NULL,
+	[SWITCH_ID] [decimal](38, 0) NULL,
+	[DISPOSITION] [varchar](100) NULL,
+	[Dummy_1] [varchar](500) NULL,
+	[Dummy_2] [varchar](500) NULL,
+	[Dummy_3] [varchar](500) NULL,
+	[Dummy_4] [varchar](500) NULL,
+	[Customer_Name] [varchar](50) NULL,
+	[GI_Product_Int_In] [varchar](100) NULL,
+	[SB_AccNo] [varchar](12) NULL,
+	[VehicleRegNo] [varchar](13) NULL,
+	[Lead_Id] [varchar](30) NULL,
+	[DummyTab] [varchar](50) NULL,
+	[Closed_On] [datetime] NULL,
+	[Initiated_On] [datetime] NULL,
+	[Status] [varchar](50) NULL,
+	[Premium] [varchar](10) NULL,
+	[PolicyNo] [varchar](50) NULL,
+	[Remarks] [varchar](1000) NULL,
+	[Mobile_No] [bigint] NULL,
+	[Account_No] [varchar](20) NULL,
+	[Product] [varchar](80) NULL,
+	[Dummy_5] [varchar](500) NULL
+) ON [PRIMARY]
 
-NOTE: 
-1. Whenever the lead status is updated to Closed in Hyd_Topup_Loan then we need to set 'DISPOSITION' value as a 'Status' instead of 'Closed'
-2. Whenever the lead status is updated to Closed in Hyd_Topup_Loan then we need to set 'CALL_TIME' value as a 'dateofCallclosure' and mark 'IsCallClosed' flag to 1.
-3. System will not update any details once the lead closed.
-4. The following lead details will not changed through ICICI Phone banking dialer, so no need to update it during reverse integration.
-	- Customer Name
-	- Customer Account Number
-	- Product
-	- Customer Mobile Number
-	- Vehicle Registration Number
-	- Remark
-------------------------------------------------------------------------------------------------------------------------------------------------
-Following are the CALL_RESULT code maintain through ICICI Phone Banking Dialer. This is stored in 'CALL_RESULT' field of 'Hyd_Topup_Loan'.
+GO
 
-CALL_RESULT field description 
+SET ANSI_PADDING OFF
+GO
 
-ANSWER			33
-ANSMACH			9
-BUSY			6
-NOANSWR			7
-WRONG			28
-MODEM			7
-FAX				17
-SIT_TONE		14
-GENERAL_ERROR	3
-DIAL_ERROR		41
-SYSTEM_ERROR	4
-DIAL_DROPPED	26
-DIAL_TONE		35
-SILENCE			32
-DROPPED			26
-NORPC			40
-NU_TONE			34
-ABANDONED		21
-PAGER			39
-UNKNOWN			28
-------------------------------------------------------------------------------------------------------------------------------------------------*/ 
-ALTER PROCEDURE [dbo].[sys_pull_lead_details_from_phone_banking_dialer_system]
-AS 
-BEGIN
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_CONTACT_INFO_TYPE]  DEFAULT ((4)) FOR [CONTACT_INFO_TYPE]
+GO
 
-	DECLARE		@error_no				INT = 0 
-			,	@error_message			VARCHAR(max) = ''
-			,	@total_pulled_leads		INT = 0
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_RECORD_TYPE]  DEFAULT ((2)) FOR [RECORD_TYPE]
+GO
 
-	BEGIN TRAN
-	BEGIN TRY
-			
-			SELECT * INTO #Hyd_Topup_Loan from openquery(genuat1, 'select * from HYd_Topup_Loan')
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_RECORD_STATUS]  DEFAULT ((1)) FOR [RECORD_STATUS]
+GO
 
-			UPDATE	lead
-			SET		lead.Policyno = htl.PolicyNo
-				,	lead.Premium = htl.Premium
-				--  Whenever the lead status is updated to Closed in Hyd_Topup_Loan then we need to set 'CALL_TIME' value as a 'dateofCallclosure'.
-				,	lead.dateofCallclosure = CASE
-												WHEN htl.RECORD_STATUS IN (3,4,5,6,7,8,9) THEN GETDATE() --htl.CALL_TIME  --Todo: Need to convert Numeric to DateTime
-												ELSE NULL
-											END 
-				--  Whenever the lead status is updated to Closed in Hyd_Topup_Loan then mark 'IsCallClosed' flag to 1.
-				,	lead.IsCallClosed = CASE
-											WHEN htl.RECORD_STATUS IN (3,4,5,6,7,8,9) THEN 1
-											ELSE 0
-										END 
-				,	lead.lead_status_id = htl.RECORD_STATUS 
-				--  Whenever the lead status is updated to Closed in Hyd_Topup_Loan then we need to set 'DISPOSITION' value as a 'Status' instead of 'Closed'
-				,	lead.Status = CASE
-									WHEN htl.RECORD_STATUS = 1 THEN 'Open'
-									WHEN htl.RECORD_STATUS = 2 THEN 'In Progress'
-									ELSE htl.DISPOSITION
-								  END
-				,	lead.dtModifiedOn = GETDATE()
-			FROM	dbo.tbl_mst_LeadDetails lead
-					JOIN LEAD_STATUS ls
-						ON lead.lead_status_id = ls.id
-						AND ls.status in ('Open','In Progress')
-					JOIN #Hyd_Topup_Loan htl
-						ON lead.uniqueLeadId = htl.Lead_Id
-						AND	lead.lead_status_id != htl.RECORD_STATUS
-			
-			-- event log if the lead is pushed successfully..
-			INSERT INTO [dbo].[sys_event_audit_log]
-			VALUES
-				   ('PULL'
-				   ,GETDATE()
-				   ,'Finished'
-				   ,'Lead details has been pulled successfully.'
-				   ,NULL
-				   ,NULL)
-				   
-			COMMIT TRAN;				   
-		
-	END TRY
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_CALL_RESULT]  DEFAULT ((28)) FOR [CALL_RESULT]
+GO
 
-	BEGIN CATCH
-		ROLLBACK TRAN;
-		--SELECT @error_no = ERROR_NUMBER(), @error_message = ERROR_MESSAGE()
-		INSERT INTO [dbo].[sys_event_audit_log]
-		VALUES
-			   ('PULL'
-			   ,GETDATE()
-			   ,'Failed'
-			   ,'System failed to update the lead details.'
-			   ,ERROR_NUMBER()
-			   ,ERROR_MESSAGE())
-	END CATCH 
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_ATTEMPT]  DEFAULT ((0)) FOR [ATTEMPT]
+GO
 
-	DROP TABLE #Hyd_Topup_Loan
-END
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_DAILY_FROM]  DEFAULT ((28800)) FOR [DAILY_FROM]
+GO
 
-SET NOCOUNT OFF
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_DAILY_TILL]  DEFAULT ((64800)) FOR [DAILY_TILL]
+GO
 
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_TZ_DBID]  DEFAULT ((109)) FOR [TZ_DBID]
+GO
 
+ALTER TABLE [dbo].[Hyd_Topup_Loan] ADD  CONSTRAINT [DF_Hyd_Topup_Loan_CHAIN_N]  DEFAULT ((0)) FOR [CHAIN_N]
 GO
 
 
