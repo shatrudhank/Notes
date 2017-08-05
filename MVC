@@ -1,1 +1,8 @@
 
+Html.Raw renders what it is given without doing any html encoding, so with ViewBag.div = "<div> Hello </div>";:
+
+@Html.Raw(ViewBag.div);
+Renders
+
+<div> Hello </div>
+
