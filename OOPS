@@ -1,0 +1,52 @@
+
+
+The abstract keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class 
+
+
+sealed class are the class which can not be inherited. example -struct
+
+
+ You can use a namespace to organize code elements and to create globally unique types. 
+
+Dispose
+1.Called explictly
+
+Finalize 
+1.Called implictly by garbage collector 
+
+
+we can have only try block without catch block when Finally is present.
+
+
+ System namespace lies mscorlib.dll
+
+Ref
+ The ref keyword is used to pass an argument as a reference. 
+This means that when value of that parameter is changed in the method, it gets reflected in the calling method.
+An argument that is passed using a ref keyword must be initialized in the calling method before it is passed to the called method. 
+
+Out
+The out keyword is also used to pass an argument like ref keyword, but 
+the argument can be passed without assigning any value to it.
+An argument that is passed using an out keyword must be initialized in the called method before it returns back to calling method. 
+
+C# 3.0 includes built-in generic delegate types Func and Action, so that you don't need to define custom delegates as above.
+
+ FUNC
+ Func is a generic delegate included in the System namespace.
+ It has zero or more input parameters and one out parameter.
+ The last parameter is considered as an out parameter.
+
+
+ Static 
+ 1.static member is common to all the instance of the class 
+ 2. It is accessed by the name of the classs.
+
+ Constant
+ 1.It can be initialized at the time of declaration only.
+ 2.Cannot modify.
+ 3.Static by default.
+
+
+ ReadOnly
+ 1.It can be initialized at the time of declaration and runtime in a constructor.
