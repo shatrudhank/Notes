@@ -1,0 +1,104 @@
+Page Life Cycle
+
+PreInit
+Create or re-create dynamic controls.
+Set a master page dynamically.
+Set the Theme property dynamically.
+it checks the IsPostBack property and determines whether the page is a postback. 
+
+Init
+Use this event to read or initialize control properties.
+
+PreLoad 
+ PreLoad occurs before the post back data is loaded in the controls. 
+
+
+Validation controls are used to ensure if, the data, entered by the user is valid. Microsoft asp.net framework, provides 6 built-in validation controls. 
+1. RequiredFieldValidator
+2. RangeValidator 
+3. RegularExpressionValidator
+4. CompareValidator
+5. CustomValidator    
+6. ValidationSummary 
+
+If in a validation control we specify 
+1.Text and error message then text value will be displayed, error message will be displayed in validation summary.
+2.Error message the message value will be displayed
+
+InitailValue property of validator is used to ignore inital value while validation.Example select gender in dropdownlist  
+
+Page.IsValid is used at server side to check whether page data is valid or not.
+
+
+RangeValidator- we need to specify Maximumvalue,MinimumValue and type(int,date,string) 
+
+By default validator use visibilaty css.  if there is more then one validator for a field use display property set to dyanamic to avoid space occupied by one of the validator.
+
+
+In compare validator we can use ControlToCompare for a control and valueToCompare for fixed values.
+Specify DataType ,Operator , ControlToCompare ,valueToCompare in compare validator
+
+
+Use submitbehaviour property of a button to called on pressing enter button.
+HyperLinkcontrol 
+1.Generate anchor tag. 
+2.Url in urlbar changes
+3.Browser remebers the history
+4.There is no server side operation
+
+Response.Redirect
+1. It is done at server
+2. Two request-response cycle occurs
+ 
+Server.Transfer
+1.Request.Form Page.Previous combines with findcontrol can be used to get previous page data.
+2.Server.Transfer can be used to navigate page within the server.
+3.It maintains previous page data.
+4.Url doesnot change
+
+Server.Execute
+
+Server.Transfer terminate execute of current page and start execution of new webform.whereas in server>exectue the control return back to initial 
+webform after completion of next webform page.
+
+
+
+Technique to send data from one webform to another
+1.Cross Page Postback
+ To get data by Page.Previous and use find control or property
+2.Query String
+     we can use multiple query string seprated by Apersand (&). We should use Server.UrlEncode to avoid case of special symbol(&)
+3.Cookies
+  Cookies are used to store small amount of information on client machine.
+  A.Persitent Cookies- Persistent cookies are those cookies which remain in client machine even after closing the browser.We need to set the time.
+  B.Non persistent - The cookies get lost once the browser window is closed. If we dont specify time then it is non persistent.
+
+4.Session
+  session state variable can be stored at
+   1.InProc
+   2.StateServer
+   3.SqlServer
+   4.Off
+   5.Custom(oracle)
+
+   Session state variable is stored at server to remeber the user it uses session id. This session id can be stored in cookie and cookieless. 
+   when session mode is inproc the session variable is stored at worker process(executable file w3wp.exe)
+
+   webgarden- webapplication deployed on server with multiple processor
+   webfarm-  webapllication deployed on multiple server
+   session state variable can be stores at sql server, inproc, state server.
+    we cannot use mode =inproc in webgarden and webfarm.
+    From performance point of view inproc is efficent. 
+
+    when session state mode=stateserver the session state variable is stored at asp.net state service. 
+    State server can have dedicated server we need to specify connection string.It is a window servive.
+    This can solve the issue of webfarm and webgarden.
+    Less efficient then inproc.
+
+
+Application state variable is multiuser global data whereas session state is variable is single session global data.
+Application state variable cannot be shared with webfarm and webgarden.
+Application state variable can be store only server whereas session state variable can be stred at various place described avobe.
+
+To read XMl we can use dataset
+
