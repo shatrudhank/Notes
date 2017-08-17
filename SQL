@@ -1,4 +1,0 @@
-Q1. What is difference between SET and Select?
- 1. Set is ANSI 
- 2. Set can assign one variable at  time only whereas select can assign multiple variable at a time.
- 3. Select has better performance compare to set
