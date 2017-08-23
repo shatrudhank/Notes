@@ -1,4 +1,12 @@
 
+
+Diffrence between webform and mvc?
+webform request- request->view->codebehind file>view
+mvc- request->action->view
+webform->strongly couple view and code behind file. need to be same name
+mvc-can have different view based pn condition.
+
+
 Html.Raw renders what it is given without doing any html encoding, so with ViewBag.div = "<div> Hello </div>";:
 
 @Html.Raw(ViewBag.div);
