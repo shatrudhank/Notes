@@ -1,5 +1,8 @@
 
-
+Interface is a construct which must be implemented.
+Interface is used to maintain uniformity across the application.
+for example capturing of date. since we are going to capture date at various place we must implement interface for date 
+in such scinario.
 The abstract keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class 
 
 
