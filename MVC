@@ -14,3 +14,5 @@ Renders
 
 <div> Hello </div>
 
+Action verb cannot be applied to Index action method. We also cannot overload index action method.
+
