@@ -1,0 +1,9 @@
+events are in small case 
+mouseleave
+mouseenter
+
+fadein and fadeout are upper case example :
+fadeIn()
+fadeOut()
+fadeToggle()
+fadeTo()
