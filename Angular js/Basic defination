@@ -1,0 +1,46 @@
+The ng-app directive defines an AngularJS application.
+
+The ng-model directive binds the value of HTML controls (input, select, textarea) to application data.
+
+The ng-bind directive binds application data to the HTML view.
+
+The ng-init directive initializes AngularJS application variables.
+
+The module is a container for the different parts of an application.
+
+The module is a container for the application controllers.
+
+An AngularJS module defines an angularjs  application.
+
+we define controller and module
+
+AngularJS lets you extend HTML with new attributes called Directives.
+
+AngularJS has a set of built-in directives which offers functionality to your applications.
+
+AngularJS also lets you define your own directives.
+
+<script>
+
+  var app = angular.module("myApp", []);
+
+  app.controller("myCtrl", function($scope) {
+      $scope.firstName = "John";
+      $scope.lastName = "Doe";
+  });
+
+</script>
+
+ng-repeat Example:
+<ul>
+    <li ng-repeat="x in names">
+      {{ x }}
+    </li>
+  </ul>
+  
+  
+  When naming a directive, you must use a camel case name, w3TestDirective, but when invoking it, 
+  you must use - separated name, w3-test-directive:
+  
+  
+  
