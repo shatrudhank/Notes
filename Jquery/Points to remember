@@ -7,3 +7,5 @@ fadeIn()
 fadeOut()
 fadeToggle()
 fadeTo()
+
+$("h1, h2, p").addClass("blue");
