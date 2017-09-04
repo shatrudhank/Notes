@@ -1,0 +1,9 @@
+DataReader and DataAdapter is dependent on the data source but DataSet in independent.
+
+SqlCommand class is used to prepare sql statement and sql procedure.
+
+Sqlreader-when Tsql return multiple value,example row of table
+Sqlscalar-when T-scalart return single value
+ExecuteNonQuery-to perform update, delete,insert operation.
+
+output of ExecuteNonQuery is int,output ofExecuteReader is object
