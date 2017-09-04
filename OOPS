@@ -53,3 +53,10 @@ C# 3.0 includes built-in generic delegate types Func and Action, so that you 
 
  ReadOnly
  1.It can be initialized at the time of declaration and runtime in a constructor.
+ 
+ 
+ A class can be declared static, indicating that it contains only static members.
+ They only contain static members.
+They cannot be instantiated.
+They are sealed.
+They cannot contain
