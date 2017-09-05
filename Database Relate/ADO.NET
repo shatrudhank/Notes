@@ -1,3 +1,25 @@
+ ADO.NET is a entity framework  that allow us to connect to the data sources such as database, excel etc.
+
+ .NET data provider for Oracle is System.Data.OracleClient.
+ .NET data provider for SQL Server is System.Data.SqlClient.
+ 
+ Connection, Command, DataReader and DataAdapter objects are providers specific and DataSet is provider independent. 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 DataReader and DataAdapter is dependent on the data source but DataSet in independent.
 
 SqlCommand class is used to prepare sql statement and sql procedure.
