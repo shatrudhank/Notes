@@ -18,7 +18,7 @@ ADO.NET is a entity framework  that allow us to connect to the data sources such
 
 
 
-
+a DataSet is (in effect) just a collection of DataTable object
 
 DataReader and DataAdapter is dependent on the data source but DataSet in independent.
 
