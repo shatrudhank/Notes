@@ -11,11 +11,16 @@ Q1)what is the difference between GET and Post request?
 
 Q2)what is difference between throw and throw ex?
    Throw maintain the stack trace and give full info about hierarchy.
-  Throw ex modify stack trace and show only location of error and hierchy is not maintained.
+   Throw ex modify stack trace and show only location of error and hierchy is not maintained.
 
 Q3)what is the use of Using?
- To import namespace
-  To manage resources files, dbconnection properly
+    To import namespace
+    To manage resources files, dbconnection properly
   
-  Q4)what is machineConfig file?
+Q4)what is machineConfig file?
+   Machine config contain configuration which is applied to all .NEt Apllication.
+  
+Q5) What are the 2 uses of an using statement in C#?
+   1. To import a namespace. Example: using System;
+   2. To close connections properly as shown in the example above 
   
