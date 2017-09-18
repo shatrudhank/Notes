@@ -1,9 +1,13 @@
-Diffrence between webform and mvc?
-webform request- request->view->codebehind file>view
-mvc- request->action->view
-webform->strongly couple view and code behind file. need to be same name
-mvc-can have different view based pn condition.
+Q1.Diffrence between webform and mvc?
 
+  To acces webform we have to pass the aspx page url containing its physical path.
+  Mvc support routing
+  webform->strongly couple view and code behind file. need to be same name
+  mvc-can have different view based onn condition.
+
+  ASP.NET Web Forms application, every URL must match with a specific .aspx file. For example, a URL http://domain/studentsinfo.aspx must match with the file studentsinfo.aspx that contains code and markup for rendering a response to the browser.
+  Routing is not specific to MVC framework. It can be used with ASP.NET Webform application or MVC application.
+  ASP.NET introduced Routing to eliminate needs of mapping each URL with a physical file.
 
 Html.Raw renders what it is given without doing any html encoding, so with ViewBag.div = "<div> Hello </div>";:
 
