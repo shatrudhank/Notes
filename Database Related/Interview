@@ -1,0 +1,5 @@
+Que. what is the difference between delete and truncate?
+Ans. 
+  1. Delete is DML command. Truncate is DDL command.
+  2.Truncate is faster than delete because there is direct interaction with database.
+  3.No log is maintained for truncte command and it is also irreversable.
