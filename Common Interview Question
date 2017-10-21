@@ -1,6 +1,6 @@
 Q1)what is the difference between GET and Post request?
    Get
-  1.Get request is used to send only message header.
+  1.History is maintained.
   2.The data is sent with url.
   3.Data is visible and hence less secure
   4. we can  send limited amount of data. The size is browser dependent.
