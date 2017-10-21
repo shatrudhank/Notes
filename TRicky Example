@@ -1,4 +1,0 @@
-string s="123";
-
-Console.WriteLine(s[0]);
-Console.WriteLine(s[0]-'0');
